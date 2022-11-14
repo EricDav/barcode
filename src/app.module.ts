@@ -17,6 +17,7 @@ import { config } from './config';
     entities: [Product, User],
     logging: true,
     synchronize: true,
+    ssl: { rejectUnauthorized: false }
   }),],
   controllers: [AppController],
   providers: [AppService],
