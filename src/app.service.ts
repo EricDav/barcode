@@ -98,6 +98,11 @@ export class AppService {
         code
       });
       sendEmail(user.email, code);
+
+      return {
+        success: true,
+        message: 'Check your email a token has been sent'
+      }
     } catch(err) {
       handleErrorCatch(err);
     }
