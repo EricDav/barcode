@@ -4,6 +4,7 @@ import { EntityManager, Repository } from 'typeorm';
 import { handleErrorCatch, sendEmail } from './helper';
 import { Product } from './models/product.model';
 import { User } from './models/user.model';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AppService {
@@ -110,7 +111,7 @@ export class AppService {
 
   async login(data) {
     try {
-      const user = await this.userRepo.findOne({
+      let user = await this.userRepo.findOne({
         where: {
           email: data.email
         }
@@ -127,6 +128,10 @@ export class AppService {
       }
 
       if (user.code === data.code) {
+        user =  await this.userRepo.save({
+          ...user,
+          token: crypto.createHash('md5').update(`${data.code}:${user.email}:${user.id}`).digest('hex')
+        })
         return {
           success: true,
           data: user
