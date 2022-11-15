@@ -17,6 +17,7 @@ const schema = joi
     HOST: joi.string().required(),
     EMAIL: joi.string().required(),
     EMAIL_PASSWORD: joi.string().required(),
+    PORT: joi.string().required(),
     DATABASE_LOGGING: joi
       .boolean()
       .truthy('TRUE')
@@ -39,10 +40,10 @@ export const config = {
       ? true
       : false,
   isLocahost: envVars.NODE_ENV === 'development' ? true : false,
-  port: envVars.DBPORT,
   NODE_ENV: envVars.NODE_ENV,
   email: envVars.EMAIL,
   emailPassword: envVars.EMAIL_PASSWORD,
+  port: envVars.PORT,
   db: {
     port: envVars.DBPORT,
     host: envVars.HOST,
