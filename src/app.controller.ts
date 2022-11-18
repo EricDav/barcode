@@ -25,4 +25,9 @@ export class AppController {
   getProduct(@Req() data: any): any {
     return this.appService.fetchProduct({ ...data.params });
   }
+
+  @Get('/products')
+  getProducts(@Req() data: any): any {
+    return this.appService.fetchProduct({ ...data.params });
+  }
 }

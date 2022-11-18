@@ -75,6 +75,34 @@ export class AppService {
     }
   }
 
+  async fetchProducts(data: any) {
+    try {
+      const pageSize = data.pageSize || 10;
+      const currentPage = data.currentPage || 1;
+      const offset = (currentPage - 1) * pageSize;
+      let productQuery = this.productRepo
+        .createQueryBuilder('product')
+        .take(pageSize)
+        .skip(offset);
+
+      if (data.userId) {
+        productQuery.andWhere(`product.userId = :userId`, { userId: data.userId})
+      }
+
+      const [products, total] = await productQuery.getManyAndCount();
+      return {
+        products,
+        pagination: {
+          currentPage,
+          pageSize: products.length,
+          total
+        }
+      };
+    } catch(err) {
+      handleErrorCatch(err);
+    }
+  }
+
   async sendCode(data) {
     try {
       const user = await this.userRepo.findOne({
