@@ -21,7 +21,7 @@ export class AppController {
     return this.appService.createProduct(data.body);
   }
 
-  @Get('/products/:serialNumber')
+  @Get('/products/:tagId')
   getProduct(@Req() data: any): any {
     return this.appService.fetchProduct({ ...data.params });
   }

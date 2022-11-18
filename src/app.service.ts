@@ -37,12 +37,12 @@ export class AppService {
         );
       }
 
-      await this.productRepo.save({
+      const product = await this.productRepo.save({
         ...data,
         userId: user.id
       });
       return {
-        success: true
+        product
       }
     } catch(err) {
       handleErrorCatch(err);
@@ -53,7 +53,7 @@ export class AppService {
     try {
       const product = this.productRepo.findOne({
         where: {
-          serialNumber: data.serialNumber
+          tagId: data.tagId
         }
       });
 

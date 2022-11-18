@@ -6,10 +6,11 @@ export class Product {
   id: number;
 
   @Index()
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   serialNumber: string;
 
-  @Column({ nullable: false })
+  @Index()
+  @Column({ nullable: false, unique: true })
   tagId: string;
 
   @Column({ nullable: false })
