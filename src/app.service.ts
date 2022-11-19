@@ -51,7 +51,7 @@ export class AppService {
 
   async fetchProduct(data: any) {
     try {
-      const product = this.productRepo.findOne({
+      const product = await this.productRepo.findOne({
         where: {
           tagId: data.tagId
         }
@@ -61,7 +61,7 @@ export class AppService {
         throw new HttpException(
           {
             status: HttpStatus.NOT_FOUND,
-            error: `Product with the serial number: ${data.serialNumber} not found`,
+            error: `Product with the tag number: ${data.serialNumber} not found`,
           },
           HttpStatus.NOT_FOUND,
         );

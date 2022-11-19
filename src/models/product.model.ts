@@ -6,7 +6,7 @@ export class Product {
   id: number;
 
   @Index()
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   serialNumber: string;
 
   @Index()
