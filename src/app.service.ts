@@ -77,6 +77,7 @@ export class AppService {
 
   async fetchProducts(data: any) {
     try {
+      
       const pageSize = data.pageSize || 10;
       const currentPage = data.currentPage || 1;
       const offset = (currentPage - 1) * pageSize;
