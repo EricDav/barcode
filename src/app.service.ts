@@ -39,7 +39,7 @@ export class AppService {
 
       const product = await this.productRepo.save({
         ...data,
-        userId: user.id
+        user: user
       });
       return {
         product
@@ -54,7 +54,8 @@ export class AppService {
       const product = await this.productRepo.findOne({
         where: {
           tagId: data.tagId
-        }
+        },
+        relations: ['user']
       });
 
       if (!product) {
@@ -67,8 +68,12 @@ export class AppService {
         );
       }
 
+      const scannedBy = product.user;
+      delete product.user;
+
       return {
-        product
+        ...product,
+        scannedBy
       };
     } catch(err) {
       handleErrorCatch(err);
@@ -77,12 +82,12 @@ export class AppService {
 
   async fetchProducts(data: any) {
     try {
-      
       const pageSize = data.pageSize || 10;
       const currentPage = data.currentPage || 1;
       const offset = (currentPage - 1) * pageSize;
       let productQuery = this.productRepo
         .createQueryBuilder('product')
+        .leftJoinAndSelect('product.user', 'user')
         .take(pageSize)
         .skip(offset);
 
@@ -91,8 +96,19 @@ export class AppService {
       }
 
       const [products, total] = await productQuery.getManyAndCount();
+      const productData  = products.map((product) => {
+        delete product.user.token;
+        delete product.user.code;
+        const scannedBy = product.user
+        delete product.user;
+        return {
+          ...product,
+          scannedBy
+        }
+      });
+
       return {
-        products,
+        products: productData,
         pagination: {
           currentPage,
           pageSize: products.length,

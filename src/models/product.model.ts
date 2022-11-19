@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne } from 'typeorm';
+import { User } from './user.model';
 
 @Entity()
 export class Product {
@@ -43,8 +44,8 @@ export class Product {
   @Column({ nullable: true })
   assignedTo: string;
 
-  @Column({ nullable: false })
-  userId: string;
+  @ManyToOne(() => User)
+  user: User;
 
   @CreateDateColumn()
   createdAt: Date;

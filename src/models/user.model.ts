@@ -13,6 +13,9 @@ export class User {
   code: string;
 
   @Column({ nullable: true })
+  name: string;
+
+  @Column({ nullable: true })
   token: string;
 
   @CreateDateColumn()
