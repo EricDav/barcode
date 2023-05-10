@@ -5,6 +5,7 @@ import { handleErrorCatch, sendEmail } from './helper';
 import { Product } from './models/product.model';
 import { User } from './models/user.model';
 import * as crypto from 'crypto';
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class AppService {

@@ -6,11 +6,12 @@ import { Product } from './models/product.model';
 import { User } from './models/user.model';
 import { config } from './config';
 
+
 @Module({
   imports: [TypeOrmModule.forRoot({
-    type: 'postgres',
+    type: 'mssql',
     host: config.db.host,
-    port: config.db.port,
+    port: Number.parseInt(config.db.port),
     username: config.db.username,
     password: config.db.password,
     database: config.db.name,
